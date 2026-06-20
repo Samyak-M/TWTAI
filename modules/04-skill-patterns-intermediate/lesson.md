@@ -210,6 +210,15 @@ For each skill:
 3. Test against a sample document
 4. Note one thing you'd improve
 
+> **🟡 Faster with `skill-creator`:** You met `skill-creator` in Module 3 (install: `/plugin install skill-creator@claude-plugins-official`). Use it here to scaffold each pattern quickly — run `/skill-creator` and tell it which of the four patterns you want and what the skill should check, generate, transform, or analyze. It writes an Agent Skill (`.claude/skills/<name>/SKILL.md`) you can then refine by hand. The four patterns are the *thinking*; `skill-creator` is the *typing*.
+
+### Patterns + `skill-creator`: a workflow
+
+1. **Pick the pattern** (Reviewer / Generator / Transformer / Analyzer) — this is your judgment.
+2. **Run `/skill-creator`** and describe the task in pattern terms ("a Reviewer that checks…").
+3. **Review the scaffold** — confirm it has your Role, Context, Constraints, and a concrete Output format.
+4. **Test and iterate** — ask `skill-creator` to tighten the description or run an eval.
+
 ---
 
 ## Discussion and Wrap-Up (10 min)
@@ -240,3 +249,4 @@ Before moving to Module 5, confirm you can:
 - [ ] Build a Generator skill that produces clean output with no preamble
 - [ ] Explain when a Transformer is different from a Generator
 - [ ] Apply the Analyzer pattern to surface undocumented gaps
+- [ ] Scaffold at least one pattern skill with `skill-creator`, then refine it by hand

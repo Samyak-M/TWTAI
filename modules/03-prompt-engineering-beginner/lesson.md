@@ -218,6 +218,76 @@ Pick one thing that didn't work and fix it. Common first-round fixes:
 
 ---
 
+## Level Up: The `skill-creator` Tool (20 min)
+
+You just built a skill by hand — that's the foundation, and you should always understand what's happening underneath. Now meet the tool that automates the busywork: **`skill-creator`**, an official Claude skill from Anthropic.
+
+`skill-creator` is a skill that helps you *create other skills*. It interviews you about the task, scaffolds a well-structured skill file for you, and can also improve or test an existing skill (it even runs evals to measure how reliably your skill triggers and performs).
+
+> **🔵 Beginner Tip:** Think of RTCCO as learning to cook, and `skill-creator` as a sous-chef. You still decide the recipe — the tool handles the prep work and plating.
+
+### Step 1: Install it (one time)
+
+`skill-creator` ships in Anthropic's official plugin marketplace (`claude-plugins-official`), which Claude Code registers automatically. Install it in one command:
+
+```
+/plugin install skill-creator@claude-plugins-official
+```
+
+Or install it interactively:
+
+```
+/plugin
+→ open the Discover tab
+→ search for "skill-creator"
+→ select it and press Enter
+→ choose User scope (available in all your projects) or Project scope (this repo only)
+```
+
+> If you don't see the `/plugin` command, update Claude Code to the latest version.
+
+### Step 2: Use it
+
+Run the skill and describe the documentation task you want to automate:
+
+```
+/skill-creator
+```
+
+Then answer its questions in plain language, for example:
+
+> "I want a skill that reviews an API endpoint doc for the six required sections and reports what's missing in a markdown table."
+
+`skill-creator` scaffolds the new skill for you, applying the same RTCCO structure you learned by hand.
+
+### Step 3: Know what it produces
+
+`skill-creator` writes an **Agent Skill** — a folder with a `SKILL.md` file inside:
+
+```
+.claude/
+  skills/
+    check-api-doc/
+      SKILL.md        ← name + description frontmatter, then instructions
+```
+
+This is slightly different from the single `.claude/commands/check-api-doc.md` file you wrote earlier:
+
+| | Slash-command skill | Agent Skill (`skill-creator` output) |
+|--|--------------------|--------------------------------------|
+| **Location** | `.claude/commands/<name>.md` | `.claude/skills/<name>/SKILL.md` |
+| **Frontmatter** | Optional | `name` + `description` (so Claude knows when it applies) |
+| **How it runs** | You type `/<name>` | You type `/<name>` **or** Claude auto-invokes it when relevant |
+| **Extra files** | Single file | Can bundle helper files in the skill folder |
+
+Both create a `/<name>` command and run the same way — custom commands and skills have been merged. Use whichever fits: hand-write a quick `.claude/commands/*.md` for simple prompts; reach for `skill-creator` when you want structure, a description that auto-triggers, or built-in testing.
+
+### Step 4: Refine with it
+
+You can point `skill-creator` at a skill you already built and ask it to tighten the description, add constraints, or run an eval. This is the fastest way to fix the "Common First-Round Fixes" problems above.
+
+---
+
 ## Discussion and Wrap-Up (10 min)
 
 ### Reflection Questions
@@ -235,7 +305,8 @@ Pick one thing that didn't work and fix it. Common first-round fixes:
    - `/style-check` — check a doc against your style guide rules
    - `/release-notes` — generate release notes from a changelog or git log
    - `/glossary-check` — flag terms that should be in a glossary
-3. Come to Module 4 with both skills ready to share
+3. **Install `skill-creator`** (`/plugin install skill-creator@claude-plugins-official`) and use it to build or refine one skill. Compare its output to the one you hand-wrote.
+4. Come to Module 4 with both skills ready to share
 
 ---
 
@@ -248,3 +319,5 @@ Before moving to Module 4, confirm you can:
 - [ ] Build a skill file from a blank markdown file
 - [ ] Test a skill and iterate based on output quality
 - [ ] Identify which RTCCO element is weakest in a given prompt
+- [ ] Install `skill-creator` and use it to scaffold a skill
+- [ ] Explain the difference between a `.claude/commands/*.md` skill and a `.claude/skills/<name>/SKILL.md` Agent Skill

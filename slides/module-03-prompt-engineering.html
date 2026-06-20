@@ -388,7 +388,7 @@
 
   <main class="stage" id="stage">
     <section class="slide" id="slide-1">
-      <div class="slide-number">1 / 12</div>
+      <div class="slide-number">1 / 14</div>
       <div class="slide-body"><h1>Prompt Engineering</h1>
 <h3>For Documentation Professionals</h3>
 <h4>Module 3 of 8 | 🔵 Beginner Level</h4>
@@ -398,7 +398,7 @@
     </section>
 
     <section class="slide" id="slide-2">
-      <div class="slide-number">2 / 12</div>
+      <div class="slide-number">2 / 14</div>
       <div class="slide-body"><h1>Quick Recap: Module 2</h1>
 <ul>
 <li>MCP = the USB standard for AI tools</li>
@@ -412,7 +412,7 @@
     </section>
 
     <section class="slide" id="slide-3">
-      <div class="slide-number">3 / 12</div>
+      <div class="slide-number">3 / 14</div>
       <div class="slide-body"><h1>The Prompt → Skill → Agent Spectrum</h1>
 <pre class="code-block"><code>Simple ─────────────────────────────────── Complex
 
@@ -428,7 +428,7 @@ Inconsistent        Consistent            Most powerful</code></pre>
     </section>
 
     <section class="slide" id="slide-4">
-      <div class="slide-number">4 / 12</div>
+      <div class="slide-number">4 / 14</div>
       <div class="slide-body"><h1>The RTCCO Framework</h1>
 <table>
 <thead><tr><th>Element</th><th>What It Does</th></tr></thead>
@@ -445,7 +445,7 @@ Inconsistent        Consistent            Most powerful</code></pre>
     </section>
 
     <section class="slide" id="slide-5">
-      <div class="slide-number">5 / 12</div>
+      <div class="slide-number">5 / 14</div>
       <div class="slide-body"><h1>Prompt Quality Comparison</h1>
 <p><strong>Weak (no RTCCO):</strong></p>
 <pre class="code-block"><code>Review this file.</code></pre>
@@ -462,7 +462,7 @@ Output: Markdown table — Section | Status | Finding | Fix</code></pre>
     </section>
 
     <section class="slide" id="slide-6">
-      <div class="slide-number">6 / 12</div>
+      <div class="slide-number">6 / 14</div>
       <div class="slide-body"><h1>Anatomy of a Claude Skill File</h1>
 <pre class="code-block"><code>.claude/
   commands/
@@ -484,7 +484,7 @@ Output: [exact format description]        ← O</code></pre>
     </section>
 
     <section class="slide" id="slide-7">
-      <div class="slide-number">7 / 12</div>
+      <div class="slide-number">7 / 14</div>
       <div class="slide-body"><h1>The $ARGUMENTS Variable</h1>
 <pre class="code-block"><code>Review the documentation at: $ARGUMENTS</code></pre>
 <p>When you run:</p>
@@ -495,7 +495,7 @@ Output: [exact format description]        ← O</code></pre>
     </section>
 
     <section class="slide" id="slide-8">
-      <div class="slide-number">8 / 12</div>
+      <div class="slide-number">8 / 14</div>
       <div class="slide-body"><h1>Build Your First Skill (Workshop)</h1>
 <p><strong>Step 1:</strong> Create the folder</p>
 <pre class="code-block"><code>mkdir -p .claude/commands</code></pre>
@@ -509,7 +509,7 @@ Output: [exact format description]        ← O</code></pre>
     </section>
 
     <section class="slide" id="slide-9">
-      <div class="slide-number">9 / 12</div>
+      <div class="slide-number">9 / 14</div>
       <div class="slide-body"><h1>Common First-Round Fixes</h1>
 <table>
 <thead><tr><th>Problem</th><th>Fix</th></tr></thead>
@@ -524,7 +524,37 @@ Output: [exact format description]        ← O</code></pre>
     </section>
 
     <section class="slide" id="slide-10">
-      <div class="slide-number">10 / 12</div>
+      <div class="slide-number">10 / 14</div>
+      <div class="slide-body"><h1>Level Up: The <code>skill-creator</code> Tool</h1>
+<p>You just built a skill by hand. Now automate the busywork.</p>
+<p><strong><code>skill-creator</code></strong> is an official Anthropic skill that <em>creates other skills</em> — it interviews you, scaffolds the file, and can test and improve existing skills.</p>
+<p><strong>Install (one time):</strong></p>
+<pre class="code-block"><code>/plugin install skill-creator@claude-plugins-official</code></pre>
+<p><strong>Use it:</strong></p>
+<pre class="code-block"><code>/skill-creator</code></pre>
+<p>Then describe your task in plain language.</p>
+<blockquote>RTCCO is the recipe. <code>skill-creator</code> is the sous-chef.</blockquote>
+</div>
+    </section>
+
+    <section class="slide" id="slide-11">
+      <div class="slide-number">11 / 14</div>
+      <div class="slide-body"><h1>Commands vs. Agent Skills</h1>
+<p><code>skill-creator</code> writes an <strong>Agent Skill</strong> — a folder with a <code>SKILL.md</code>:</p>
+<pre class="code-block"><code>.claude/skills/check-api-doc/SKILL.md</code></pre>
+<table>
+<thead><tr><th></th><th><code>.claude/commands/*.md</code></th><th><code>SKILL.md</code></th></tr></thead>
+<tbody>
+<tr><td>Frontmatter</td><td>Optional</td><td><code>name</code> + <code>description</code></td></tr>
+<tr><td>How it runs</td><td>You type <code>/name</code></td><td><code>/name</code> <strong>or</strong> auto-invoked</td></tr>
+<tr><td>Extra files</td><td>Single file</td><td>Bundle helpers</td></tr>
+</tbody></table>
+<p><strong>Both make a <code>/name</code> command.</strong> Hand-write simple prompts; use <code>skill-creator</code> for structure, auto-triggering, and testing.</p>
+</div>
+    </section>
+
+    <section class="slide" id="slide-12">
+      <div class="slide-number">12 / 14</div>
       <div class="slide-body"><h1>Discussion</h1>
 <ol>
 <li>What was the hardest RTCCO element to write?</li>
@@ -539,8 +569,8 @@ Output: [exact format description]        ← O</code></pre>
 </div>
     </section>
 
-    <section class="slide" id="slide-11">
-      <div class="slide-number">11 / 12</div>
+    <section class="slide" id="slide-13">
+      <div class="slide-number">13 / 14</div>
       <div class="slide-body"><h1>Before Module 4</h1>
 <ol>
 <li><strong>Refine</strong> your <code>/check-api-doc</code> skill — use it on real work</li>
@@ -550,20 +580,22 @@ Output: [exact format description]        ← O</code></pre>
 <p>- <code>/release-notes</code> — generate from changelog or git log</p>
 <p>- <code>/glossary-check</code> — flag terms needing glossary entries</p>
 <ol>
+<li><strong>Install <code>skill-creator</code></strong> and use it to build or refine one skill</li>
 <li>Come to Module 4 with <strong>both skills ready to share</strong></li>
 </ol>
 </div>
     </section>
 
-    <section class="slide" id="slide-12">
-      <div class="slide-number">12 / 12</div>
+    <section class="slide" id="slide-14">
+      <div class="slide-number">14 / 14</div>
       <div class="slide-body"><h1>🔵 Beginner Checkpoint: Module 3</h1>
 <ul class="checklist">
 <li><input type="checkbox"  disabled> Name the 5 RTCCO elements from memory</li>
 <li><input type="checkbox"  disabled> Explain why <code>$ARGUMENTS</code> makes a skill reusable</li>
 <li><input type="checkbox"  disabled> Build a skill from a blank markdown file</li>
 <li><input type="checkbox"  disabled> Test and iterate based on output quality</li>
-<li><input type="checkbox"  disabled> Identify which RTCCO element is weakest in a given prompt</li>
+<li><input type="checkbox"  disabled> Install <code>skill-creator</code> and scaffold a skill with it</li>
+<li><input type="checkbox"  disabled> Explain the difference between a command and an Agent Skill</li>
 </ul>
 <p><strong>Next: Module 4 — Skill Patterns →</strong></p>
 </div>
@@ -573,16 +605,16 @@ Output: [exact format description]        ← O</code></pre>
   <footer class="controls">
     <button class="btn" id="btn-prev" onclick="prevSlide()" disabled>&#8592; Prev</button>
     <div class="progress-wrap">
-      <div class="progress-bar" id="progress-bar" style="width: 8.3%"></div>
+      <div class="progress-bar" id="progress-bar" style="width: 7.1%"></div>
     </div>
-    <span class="slide-counter" id="counter">1 / 12</span>
+    <span class="slide-counter" id="counter">1 / 14</span>
     <button class="btn btn-primary" id="btn-next" onclick="nextSlide()">Next &#8594;</button>
     <span class="kbd-hint"><kbd>←</kbd><kbd>→</kbd> navigate</span>
   </footer>
 
   <script>
     let current = 0;
-    const total = 12;
+    const total = 14;
     const slides = document.querySelectorAll('.slide');
 
     function show(n) {
