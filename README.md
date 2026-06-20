@@ -60,7 +60,7 @@ Use this 4-hour track before Module 1 if participants are early in their AI jour
 | 1 | 🟢 Novice | **AI Literacy** — How LLMs work, the Human + AI model | 2 hrs |
 | 2 | 🟢 Novice | **Introduction to MCP** — Protocol, tools, resources, prompts | 2 hrs |
 | 3 | 🔵 Beginner | **Prompt Engineering** — Prompts, first skill, skill anatomy | 2 hrs |
-| 4 | 🟡 Intermediate | **Skill Patterns** — Reviewer, Generator, Transformer, Analyzer | 2 hrs |
+| 4 | 🟡 Intermediate | **Sharing Your Skills** — Marketplaces, plugins, install & publish | 2 hrs |
 | 5 | 🟡 Intermediate | **Advanced Skills** — Multi-step workflows, team collaboration | 2 hrs |
 | 6 | 🟠 Advanced | **Building MCP Tools** — Explore and extend an MCP server | 2 hrs |
 | 7 | 🟠 Advanced | **Expert Workflows** — Production-grade skills and automation | 2 hrs |

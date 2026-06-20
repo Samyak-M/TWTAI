@@ -306,7 +306,7 @@ You can point `skill-creator` at a skill you already built and ask it to tighten
    - `/release-notes` — generate release notes from a changelog or git log
    - `/glossary-check` — flag terms that should be in a glossary
 3. **Install `skill-creator`** (`/plugin install skill-creator@claude-plugins-official`) and use it to build or refine one skill. Compare its output to the one you hand-wrote.
-4. Come to Module 4 with both skills ready to share
+4. Come to Module 4 with at least one skill ready — you'll bundle it into a plugin and publish it for the team to install
 
 ---
 

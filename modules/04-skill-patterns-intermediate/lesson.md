@@ -1,4 +1,4 @@
-# Module 4: Skill Patterns — Templates for Every Documentation Task
+# Module 4: Sharing Your Skills — Marketplaces & Plugins
 ## 🟡 Intermediate Level
 
 **Duration:** 2 hours | **Prerequisite:** Modules 1–3 | **Tech Writer's Tribe**
@@ -7,217 +7,245 @@
 
 ## What This Level Means
 
-**Intermediate** means you've built skills and they work. Now you're leveling up: instead of building every skill from scratch, you'll learn four foundational patterns that cover 90% of documentation tasks. Experienced practitioners recognize patterns — you now become one.
+**Intermediate** means you've built skills and they work — on *your* machine. This module is about the moment a skill stops being a personal trick and becomes a team capability. You'll learn Claude Code's plugin system: how to **install** other people's skills and how to **publish** your own so the whole team runs the same checklist the same way.
 
 ### Intermediate Learning Objectives
 
 By the end of Module 4, you will be able to:
-- Identify which of the four patterns best fits a given documentation task
-- Build a Reviewer, Generator, Transformer, and Analyzer skill
-- Combine pattern templates with the RTCCO framework
-- Evaluate a skill's quality using the peer review rubric
+- Explain the **marketplace → plugin → component** hierarchy in plain language
+- Tell the difference between a command, a skill, an agent, a hook, and an MCP server inside a plugin
+- Install a marketplace and a plugin as an individual
+- Bundle your own skills into a plugin and publish a marketplace on GitHub
+- Help a teammate add your marketplace and run your skills
 
 ---
 
 ## Recap and Homework Share (15 min)
 
-> "Show us the skill you built! What task does it automate? How did the output look?"
+> "Show us the skill you built! Now — how would someone *else* run it?"
 
-3–4 volunteers share their skill and demonstrate it live. Class discusses:
-- What worked well?
-- What would you improve?
-- Which RTCCO element made the biggest difference?
+3–4 volunteers demo a skill. Then the key question for today:
 
----
+- Right now your skill lives in *your* `.claude/` folder. If a teammate wanted it, what would you do — email them the file? Paste it in Slack?
+- What breaks when five people each keep their own copy?
 
-## The Four Skill Patterns (30 min)
-
-Most documentation tasks fit one of four patterns. Learning these patterns gives you a template for almost any skill you'll ever need.
+That problem — **distribution and consistency** — is what this module solves.
 
 ---
 
-### Pattern 1: The Reviewer
+## Why Sharing Matters (10 min)
 
-**Purpose:** Check content against criteria and report findings.
+A skill on one laptop helps one person. The same skill, shared, helps the whole team — and everyone applies the *same* standard the same way.
 
-**When to use:** PR reviews, doc audits, style guide checks, completeness checks, accessibility reviews.
+| Without sharing | With sharing |
+|-----------------|--------------|
+| Each writer keeps a private copy | One source of truth, installed by everyone |
+| Copies drift out of sync | Update once; everyone gets it |
+| "Which version is current?" | Versioned in Git |
+| Onboarding = "here's a zip of my prompts" | Onboarding = two commands |
 
-**Template:**
-```markdown
-You are a [ROLE] reviewing [TARGET] for [PURPOSE].
-
-Review: $ARGUMENTS
-
-## Checklist
-1. [Criterion 1] — [What PASS looks like]
-2. [Criterion 2] — [What PASS looks like]
-3. [Criterion 3] — [What PASS looks like]
-
-## Constraints
-- Do NOT make edits to the document
-- Report findings only; do not rewrite
-
-## Output
-For each criterion:
-| Criterion | Status | Finding | Action |
-|-----------|--------|---------|--------|
-
-Status options: ✅ PASS | ⚠️ NEEDS WORK | ❌ MISSING
-
-## Summary
-- Score: X of Y criteria met
-- Top 3 improvements (ranked by impact on the reader)
-```
-
-**Documentation examples:**
-- Check an API endpoint doc for required sections → `/check-api-doc`
-- Review a README against team standards → `/check-readme`
-- Audit a doc set for consistent terminology → `/term-audit`
+This is the **documentation scaling problem** from Module 2, solved for skills: institutional knowledge stops walking out the door because it's encoded, shared, and versioned.
 
 ---
 
-### Pattern 2: The Generator
+## The Hierarchy (20 min)
 
-**Purpose:** Create new content from source material.
-
-**When to use:** README generation, API reference scaffolding, changelog creation, template filling, release notes.
-
-**Template:**
-```markdown
-Read the source material at $ARGUMENTS and generate [OUTPUT TYPE].
-
-## Rules
-- [Content rule 1 — what must be included]
-- [Content rule 2 — what must be excluded]
-- [Formatting rule]
-
-## Output
-Output ONLY the [content type].
-No preamble, no commentary, no explanations.
-Begin with the first line of actual content.
-```
-
-**Documentation examples:**
-- Generate a changelog from git history → `/release-notes`
-- Create API doc scaffolding from an OpenAPI spec → `/scaffold-api-doc`
-- Generate a glossary from project source code → `/build-glossary`
-
----
-
-### Pattern 3: The Transformer
-
-**Purpose:** Convert content from one format or style to another.
-
-**When to use:** Style rewrites, format conversions, audience-level adjustments, translation prep.
-
-**Template:**
-```markdown
-Transform the content at $ARGUMENTS.
-
-## From
-[Describe the current format/style/level]
-
-## To
-[Describe the target format/style/level]
-
-## Preserve (do NOT change)
-- [What must remain identical: code samples, proper nouns, product names]
-- [Any structural elements that must not change]
-
-## Change
-- [What must be transformed]
-- [Specific style rules to apply]
-
-## Output
-The transformed content only. No comparison, no markup showing changes.
-```
-
-**Documentation examples:**
-- Rewrite passive voice to active voice → `/active-voice`
-- Convert a wall of text into a structured reference doc → `/to-reference`
-- Simplify expert content for a beginner audience → `/simplify`
-
----
-
-### Pattern 4: The Analyzer
-
-**Purpose:** Extract insights, patterns, or structure from raw material.
-
-**When to use:** Coverage analysis, gap identification, dependency mapping, metrics extraction.
-
-**Template:**
-```markdown
-Analyze the content at $ARGUMENTS for [ANALYSIS PURPOSE].
-
-## What to Analyze
-- [Dimension 1 — what to look for]
-- [Dimension 2 — what to look for]
-- [Dimension 3 — what to look for]
-
-## What NOT to Analyze
-- [Out-of-scope items — be explicit]
-
-## Output
-[SECTION 1: Summary Statistics]
-[SECTION 2: Detailed Findings — organized by category]
-[SECTION 3: Priority Recommendations — ranked by impact]
-
-Keep each recommendation actionable. Start with a verb.
-```
-
-**Documentation examples:**
-- Surface undocumented code functions → `/doc-coverage`
-- Identify jargon a new reader wouldn't know → `/jargon-audit`
-- Find inconsistent product naming across a doc set → `/naming-audit`
-
----
-
-## Pattern Selection Guide (10 min)
-
-Use this decision tree when you don't know which pattern to use:
+Claude Code packages and distributes skills through a clear, three-level hierarchy. Learn these nouns and everything else follows.
 
 ```
-What is your primary goal?
-│
-├── Evaluate existing content → REVIEWER
-│     "Does this meet the standard?"
-│
-├── Create new content → GENERATOR
-│     "Make this exist."
-│
-├── Change the form of existing content → TRANSFORMER
-│     "Keep the substance; change how it's expressed."
-│
-└── Extract information from content → ANALYZER
-      "Tell me what's in here / what's missing."
+Marketplace            ← a catalog (one GitHub repo) that lists plugins
+  └── Plugin           ← a shareable bundle someone installs
+        ├── Commands   ← slash-command skills you invoke (/check-style)
+        ├── Skills     ← SKILL.md skills Claude can auto-invoke
+        ├── Agents     ← subagents with their own prompt, tools & model
+        ├── Hooks      ← event handlers (run on save, on commit, etc.)
+        └── MCP servers ← real tools/data (local or a remote URL)
+```
+
+Read it top-down: **a marketplace contains plugins; a plugin bundles commands, skills, agents, and more.**
+
+### The Four Nouns
+
+| Term | What it is | Analogy |
+|------|-----------|---------|
+| **Marketplace** | A catalog file (`.claude-plugin/marketplace.json`) in a Git repo that lists one or more plugins | An app store |
+| **Plugin** | A self-contained, installable bundle with a `.claude-plugin/plugin.json` manifest | An app |
+| **Command** | A slash-command skill (a `.md` file in `commands/`) you invoke as `/name` | A button in the app |
+| **Agent** | A subagent (a `.md` file in `agents/`) with its own prompt, tools, and model — spawned for a focused job | A specialist the app can call |
+
+> **🟡 Key distinction:** A **marketplace ≠ a plugin.** The marketplace is the *catalog*; the plugin is the *thing you install*. One marketplace can list many plugins.
+
+### What a plugin can bundle
+
+A plugin is not limited to commands. At the plugin's root, Claude Code auto-discovers:
+
+| Folder / file | What it adds |
+|---------------|--------------|
+| `commands/*.md` | Slash-command skills |
+| `skills/<name>/SKILL.md` | Skills with a `description`, so Claude can auto-invoke them |
+| `agents/*.md` | Subagents |
+| `hooks/hooks.json` | Event handlers |
+| `.mcp.json` | MCP servers (local programs or remote URLs) |
+
+You decide how much to include — a plugin can be just one command, or all of the above.
+
+---
+
+## Command vs. Skill vs. Agent (15 min)
+
+These three are easy to confuse. Here's when to reach for each:
+
+- **Command** — a reusable instruction you run on demand: `/check-style`, `/release-notes`. This is everything you built in Module 3. It runs only when you type it.
+- **Skill** (`SKILL.md`) — like a command, but its YAML frontmatter has a `description`, so **Claude can auto-invoke it** when your request matches. Good for "whenever I ask about X, apply this."
+- **Agent** — an isolated worker with its own context window, tool permissions, and model. Best for a **multi-step job you delegate** (e.g. "audit this whole doc set"). Claude can also auto-delegate to it.
+
+**Namespacing.** Once bundled in a plugin, components are prefixed with the plugin name to avoid collisions. A `check-style` command in the `doc-skills` plugin is invoked as:
+
+```
+/doc-skills:check-style
 ```
 
 ---
 
-## Workshop: Build One of Each (30 min)
+## Installing — as an Individual (15 min)
 
-Work in pairs or alone. Build ONE skill using each pattern template. Use your own workflow context.
+Using a shared skill is two commands. Let's use the real example repo built for this program.
 
-**Suggested assignments:**
-- `/check-style` — Reviewer pattern (checks style guide compliance)
-- `/release-notes` — Generator pattern (generates changelog entries)
-- `/simplify-prose` — Transformer pattern (rewrites for a beginner audience)
-- `/doc-coverage` — Analyzer pattern (finds undocumented functions)
+### Step 1: Add the marketplace (the catalog)
 
-For each skill:
-1. Choose the right pattern
-2. Fill in the template with your specific Role, Context, Checklist/Rules, Constraints, Output
-3. Test against a sample document
-4. Note one thing you'd improve
+```
+/plugin marketplace add AmanProjects/twtai-skill
+```
 
-> **🟡 Faster with `skill-creator`:** You met `skill-creator` in Module 3 (install: `/plugin install skill-creator@claude-plugins-official`). Use it here to scaffold each pattern quickly — run `/skill-creator` and tell it which of the four patterns you want and what the skill should check, generate, transform, or analyze. It writes an Agent Skill (`.claude/skills/<name>/SKILL.md`) you can then refine by hand. The four patterns are the *thinking*; `skill-creator` is the *typing*.
+You'll see `Successfully added marketplace: twtai`. GitHub shorthand (`owner/repo`) is the common form; these also work:
 
-### Patterns + `skill-creator`: a workflow
+| Source | Syntax |
+|--------|--------|
+| GitHub repo | `/plugin marketplace add owner/repo` |
+| GitHub repo at a branch/tag | `/plugin marketplace add owner/repo@v1.0` |
+| Git URL (GitLab, etc.) | `/plugin marketplace add https://gitlab.com/team/plugins.git` |
+| Local folder | `/plugin marketplace add ./my-marketplace` |
 
-1. **Pick the pattern** (Reviewer / Generator / Transformer / Analyzer) — this is your judgment.
-2. **Run `/skill-creator`** and describe the task in pattern terms ("a Reviewer that checks…").
-3. **Review the scaffold** — confirm it has your Role, Context, Constraints, and a concrete Output format.
-4. **Test and iterate** — ask `skill-creator` to tighten the description or run an eval.
+### Step 2: Install a plugin from it
+
+Use `<plugin-name>@<marketplace-name>`. The name is the marketplace's `name` field (`twtai`), **not** the repo name (`twtai-skill`):
+
+```
+/plugin install doc-skills@twtai
+```
+
+Or browse interactively — run `/plugin`, open the **Discover** tab, pick a plugin, and choose a scope:
+- **User** — available in all your projects (default)
+- **Project** — shared with your team via `.claude/settings.json`
+- **Local** — this repo only
+
+### Step 3: Use it
+
+After install, the plugin's components are live:
+
+```
+/doc-skills:check-style sample-docs/orders-api.md
+```
+
+Manage everything with `/plugin list`, `/plugin marketplace list`, `/plugin disable`, `/plugin uninstall`, and `/plugin marketplace update <name>` to pull the latest.
+
+---
+
+## Anatomy of a Marketplace Repo (15 min)
+
+This is the **actual layout of `AmanProjects/twtai-skill`** — the repo you just added. One marketplace, one plugin, with a command, a skill, an agent, a hook, and (remote) MCP servers all wired together:
+
+```
+twtai-skill/                             ← the marketplace repo (on GitHub)
+├── .claude-plugin/
+│   └── marketplace.json                 ← the catalog
+└── plugins/
+    └── doc-skills/                       ← one plugin
+        ├── .claude-plugin/
+        │   └── plugin.json               ← the plugin manifest
+        ├── commands/
+        │   ├── check-style.md            ← a command (/doc-skills:check-style)
+        │   └── release-notes.md          ← a command (/doc-skills:release-notes)
+        ├── skills/
+        │   └── doc-coverage/SKILL.md     ← a skill   (auto-invoked when relevant)
+        ├── agents/
+        │   └── doc-auditor.md            ← an agent  (delegated for big audits)
+        ├── hooks/
+        │   └── hooks.json                ← a hook    (nudges after edits)
+        └── .mcp.json                     ← remote MCP servers (connect on install)
+```
+
+**`.claude-plugin/marketplace.json`** — the catalog:
+```json
+{
+  "name": "twtai",
+  "owner": { "name": "Tech Writer's Tribe" },
+  "plugins": [
+    {
+      "name": "doc-skills",
+      "source": "./plugins/doc-skills",
+      "description": "Documentation commands, a skill, an agent, and remote MCP servers."
+    }
+  ]
+}
+```
+
+**`plugins/doc-skills/.claude-plugin/plugin.json`** — the plugin manifest:
+```json
+{
+  "name": "doc-skills",
+  "version": "1.0.0",
+  "description": "Documentation skills built in the TWT program.",
+  "author": { "name": "Tech Writer's Tribe" }
+}
+```
+
+> **🟡 Notes:**
+> - Only `plugin.json` and `marketplace.json` go inside `.claude-plugin/`. Your `commands/`, `skills/`, `agents/`, `hooks/` folders live at the plugin **root**.
+> - Skip `version` and the plugin auto-updates to the latest commit; set it to pin a release.
+> - The marketplace's `name` is `twtai` — that's why you install with `doc-skills@twtai`, even though the repo is called `twtai-skill`.
+
+---
+
+## Workshop: Publish Your Own Marketplace (30 min)
+
+Work in pairs. One of you publishes; the other installs. Then switch.
+
+**Don't start from scratch — clone the example.** `AmanProjects/twtai-skill` is a complete, working version of this exact structure. Open it, copy the layout, and swap in the skill *you* built in Module 3.
+
+### The 5-step loop
+
+1. **Create a GitHub repo** (e.g. `your-name/my-skills`).
+2. **Add `.claude-plugin/marketplace.json`** at the root, and pick a `name` for your marketplace.
+3. **Add a plugin folder** with `.claude-plugin/plugin.json`, then drop your skill(s) into `commands/`.
+4. **Commit and push.**
+5. **Share two lines** with your partner (the `@name` is your marketplace's `name`, not the repo):
+   ```
+   /plugin marketplace add your-name/my-skills
+   /plugin install my-plugin@my-marketplace
+   ```
+
+### Then your partner
+
+- Runs those two lines.
+- Invokes your namespaced command: `/my-plugin:your-skill <file>`.
+- Reports back: did it work on *their* machine, first try?
+
+That last step is the whole point — **a skill that runs identically on someone else's machine is a shared skill.**
+
+---
+
+## Lighter-Weight Sharing (10 min)
+
+A full marketplace is the durable, scalable answer. But for quick cases:
+
+| Situation | Lightweight option |
+|-----------|--------------------|
+| Share one skill with one person, once | Send the single `.md` file; they drop it in `.claude/commands/` |
+| Share with your project team | Commit `.claude/commands/*.md` into the project repo — everyone who clones it gets the skills |
+| Connect everyone to a hosted tool | Commit a project `.mcp.json` with a remote MCP server URL (no install) |
+
+Reach for a **marketplace** when you want versioning, many skills, auto-updates, and one-command install for a wide audience.
 
 ---
 
@@ -225,17 +253,21 @@ For each skill:
 
 ### Reflection Questions
 
-1. Which pattern covers the most tasks in your daily work?
-2. Can you think of a task that doesn't fit any of the four patterns?
-3. What's the risk of using a Generator pattern without a human review step?
+1. What's one skill you'd publish first, and who's the audience?
+2. When is a full marketplace overkill — and a committed `.claude/commands/` file enough?
+3. What's the risk of a teammate auto-updating to your latest commit without review?
+
+### The Key Takeaway
+
+> "A skill on your laptop is a habit. A skill in a marketplace is a standard."
 
 ---
 
 ## Homework (Before Module 5)
 
-1. **Build** a `/doc-coverage` skill using the Analyzer pattern
-2. **Build** one additional custom skill using any pattern — something specific to your workflow
-3. **Read** the `peer-review-rubric.md` in the `resources/` folder — you'll use it in Module 5
+1. **Publish** a marketplace: using `AmanProjects/twtai-skill` as a template, create your own GitHub repo with one plugin containing at least one of your skills. Push it.
+2. **Get one teammate** to add your marketplace and install your plugin — confirm your skill runs on their machine.
+3. **Read** the `peer-review-rubric.md` in the `resources/` folder — you'll use it in Module 5.
 
 ---
 
@@ -243,10 +275,10 @@ For each skill:
 
 Before moving to Module 5, confirm you can:
 
-- [ ] Name the four skill patterns from memory
-- [ ] Match a documentation task to its correct pattern without the decision tree
-- [ ] Build a Reviewer skill with a complete, scored checklist
-- [ ] Build a Generator skill that produces clean output with no preamble
-- [ ] Explain when a Transformer is different from a Generator
-- [ ] Apply the Analyzer pattern to surface undocumented gaps
-- [ ] Scaffold at least one pattern skill with `skill-creator`, then refine it by hand
+- [ ] Explain the marketplace → plugin → command/agent hierarchy in your own words
+- [ ] State the difference between a marketplace and a plugin
+- [ ] Tell when to use a command vs. a skill vs. an agent
+- [ ] Add a marketplace with `/plugin marketplace add`
+- [ ] Install a plugin with `/plugin install <plugin>@<marketplace>`
+- [ ] Lay out a marketplace repo: `marketplace.json`, a plugin folder, and `plugin.json`
+- [ ] Publish your own marketplace on GitHub and have a teammate install it

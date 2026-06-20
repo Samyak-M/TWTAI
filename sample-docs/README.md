@@ -1,6 +1,6 @@
 # Sample Docs
 
-Practice documents for the **Tech Writer's Tribe** training. Use these files to run the Skills you build in **Module 3 (Prompt Engineering)** and **Module 4 (Skill Patterns)**.
+Practice documents for the **Tech Writer's Tribe** training. Use these files to run the Skills you build in **Module 3 (Prompt Engineering)** and share in **Module 4 (Sharing Your Skills)**.
 
 The main file, `orders-api.md`, is an API reference with **intentional issues** seeded in. Your skills should find — and in some cases fix — them.
 
