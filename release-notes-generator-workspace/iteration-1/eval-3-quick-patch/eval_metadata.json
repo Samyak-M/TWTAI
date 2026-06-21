@@ -1,0 +1,6 @@
+{
+  "eval_id": 3,
+  "eval_name": "quick-patch-release",
+  "prompt": "Quick patch release: v2.4.1 with just 3 critical bug fixes from Jira (PLAT-1234, PLAT-1289, PLAT-1301). Release date: today. No breaking changes, no Confluence content. Create the release notes and include a checklist verifying each Jira ticket exists.",
+  "assertions": []
+}

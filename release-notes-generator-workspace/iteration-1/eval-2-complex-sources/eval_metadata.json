@@ -1,0 +1,6 @@
+{
+  "eval_id": 2,
+  "eval_name": "complex-multi-source-release",
+  "prompt": "We're releasing v3.0.0 with a breaking change. Pull from: (1) Jira tickets labeled 'v3.0' in the Platform project, (2) our Confluence release-notes template at /wiki/spaces/PROD/pages/release-v3, and (3) git commits between tags v2.9.0 and v3.0.0 in main branch. Include a breaking changes section and separate internal notes from public-facing content.",
+  "assertions": []
+}

@@ -1,0 +1,6 @@
+{
+  "eval_id": 1,
+  "eval_name": "simple-jira-release",
+  "prompt": "Generate release notes for version 2.5.0. We shipped 12 Jira tickets from the 2.5.0 release (6 features, 4 bug fixes, 2 improvements). The release date is June 20, 2024. Create both markdown and HTML outputs with a review checklist.",
+  "assertions": []
+}

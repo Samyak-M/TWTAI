@@ -1,0 +1,23 @@
+{
+  "skill_name": "release-notes-generator",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Generate release notes for version 2.5.0. We shipped 12 Jira tickets from the 2.5.0 release (6 features, 4 bug fixes, 2 improvements). The release date is June 20, 2024. Create both markdown and HTML outputs with a review checklist.",
+      "expected_output": "Markdown file with structured sections (Overview, Features, Bug Fixes, Improvements), review checklist table showing ticket verification, and corresponding HTML version",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "We're releasing v3.0.0 with a breaking change. Pull from: (1) Jira tickets labeled 'v3.0' in the Platform project, (2) our Confluence release-notes template at /wiki/spaces/PROD/pages/release-v3, and (3) git commits between tags v2.9.0 and v3.0.0 in main branch. Include a breaking changes section and separate internal notes from public-facing content.",
+      "expected_output": "Complete release notes with distinct Breaking Changes section, [Internal Only] markers where appropriate, traceability back to sources, both formats",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Quick patch release: v2.4.1 with just 3 critical bug fixes from Jira (PLAT-1234, PLAT-1289, PLAT-1301). Release date: today. No breaking changes, no Confluence content. Create the release notes and include a checklist verifying each Jira ticket exists.",
+      "expected_output": "Concise release notes focusing on bug fixes, verification checklist confirming all 3 tickets, markdown and HTML outputs",
+      "files": []
+    }
+  ]
+}
