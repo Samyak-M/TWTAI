@@ -9,7 +9,7 @@
 |-------|-----------|
 | 🟢 Novice | Explain AI and MCP; identify skill candidates |
 | 🔵 Beginner | Build skills using RTCCO; test and iterate |
-| 🟡 Intermediate | Apply four patterns; build multi-step workflows; peer review |
+| 🟡 Intermediate | Share skills via marketplaces & plugins; build multi-step workflows; peer review |
 | 🟠 Advanced | Extend MCP servers; build end-to-end automation |
 | 🔴 Expert | Ship production tools; certify; mentor others |
 
@@ -37,14 +37,23 @@
 
 ---
 
-## The Four Skill Patterns
+## Sharing Skills: Marketplaces & Plugins
 
-| Pattern | Purpose | Key Signal in Task Description |
-|---------|---------|-------------------------------|
-| **Reviewer** | Check content against criteria | "Does this meet...?" "Is this compliant...?" |
-| **Generator** | Create new content from source | "Generate...", "Create...", "Produce..." |
-| **Transformer** | Convert form or style | "Rewrite...", "Convert...", "Simplify..." |
-| **Analyzer** | Extract insights or gaps | "What's missing?", "Find...", "Surface..." |
+| Term | What it is |
+|------|-----------|
+| **Marketplace** | A catalog (`.claude-plugin/marketplace.json`) in a Git repo that lists plugins |
+| **Plugin** | An installable bundle (`.claude-plugin/plugin.json` + `commands/`, `skills/`, `agents/`, `hooks/`, `.mcp.json`) |
+| **Command** | A slash-command skill — run with `/plugin-name:command` |
+| **Agent** | A subagent with its own prompt, tools, and model |
+
+**Install (two commands):**
+```
+/plugin marketplace add owner/repo        # add the catalog
+/plugin install <plugin>@<marketplace>    # install the plugin
+```
+> The `@name` is the marketplace's `name` field, not the repo name. Live example: `/plugin marketplace add AmanProjects/twtai-skill` then `/plugin install doc-skills@twtai`.
+
+**Publish your own:** create a repo → add `marketplace.json` → add a plugin folder with `plugin.json` + your `commands/` → commit & push → share the two install lines.
 
 ---
 

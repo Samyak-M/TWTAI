@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Module 4 Slides: Skill Patterns | Tech Writer's Tribe</title>
+  <title>Module 4 Slides: Sharing Your Skills | Tech Writer's Tribe</title>
   <style>
     :root {
       --bg: #f5f7fa;
@@ -381,16 +381,16 @@
   <header class="header">
     <div class="header-left">
       <span class="brand">TWT</span>
-      <span class="header-title">Module 4 Slides: Skill Patterns</span>
+      <span class="header-title">Module 4 Slides: Sharing Your Skills</span>
     </div>
     <div class="level-badge">🟡 Intermediate</div>
   </header>
 
   <main class="stage" id="stage">
     <section class="slide" id="slide-1">
-      <div class="slide-number">1 / 14</div>
-      <div class="slide-body"><h1>Skill Patterns</h1>
-<h3>Templates for Every Documentation Task</h3>
+      <div class="slide-number">1 / 15</div>
+      <div class="slide-body"><h1>Sharing Your Skills</h1>
+<h3>Marketplaces & Plugins</h3>
 <h4>Module 4 of 8 | 🟡 Intermediate Level</h4>
 <p><strong>Tech Writer's Tribe</strong></p>
 <p>AI-Powered Documentation Mastery</p>
@@ -398,216 +398,212 @@
     </section>
 
     <section class="slide" id="slide-2">
-      <div class="slide-number">2 / 14</div>
+      <div class="slide-number">2 / 15</div>
       <div class="slide-body"><h1>Quick Recap: Module 3</h1>
 <ul>
 <li>The RTCCO framework: Role, Task, Context, Constraints, Output</li>
 <li>A skill = markdown file in <code>.claude/commands/</code></li>
 <li><code>$ARGUMENTS</code> = what makes a skill reusable</li>
-<li>You built your first working skill</li>
+<li>You built working skills</li>
 </ul>
-<blockquote>"Show us your skill! What task does it automate?</blockquote>
-<blockquote>How did the output look?"</blockquote>
+<blockquote>"Show us your skill! Now — how would someone <strong>else</strong> run it?"</blockquote>
 </div>
     </section>
 
     <section class="slide" id="slide-3">
-      <div class="slide-number">3 / 14</div>
-      <div class="slide-body"><h1>Why Patterns?</h1>
-<p>Writing every skill from scratch = reinventing the wheel.</p>
-<p>Learning the <strong>four patterns</strong> gives you a template for almost any documentation task you'll ever face.</p>
-<p><strong>Experienced practitioners recognize patterns.</strong></p>
-<p><strong>This module is where you become one.</strong></p>
+      <div class="slide-number">3 / 15</div>
+      <div class="slide-body"><h1>A Skill on One Laptop Helps One Person</h1>
+<p>Right now your skill lives in <strong>your</strong> <code>.claude/</code> folder.</p>
+<p>A teammate wants it. What do you do — email the file? Paste it in Slack?</p>
+<table>
+<thead><tr><th>Without sharing</th><th>With sharing</th></tr></thead>
+<tbody>
+<tr><td>Everyone keeps a private copy</td><td>One source of truth</td></tr>
+<tr><td>Copies drift out of sync</td><td>Update once, everyone gets it</td></tr>
+<tr><td>"Which version is current?"</td><td>Versioned in Git</td></tr>
+<tr><td>Onboarding = "here's a zip"</td><td>Onboarding = two commands</td></tr>
+</tbody></table>
+<p><strong>This module: turn your skill into a team standard.</strong></p>
 </div>
     </section>
 
     <section class="slide" id="slide-4">
-      <div class="slide-number">4 / 14</div>
-      <div class="slide-body"><h1>The Four Skill Patterns</h1>
-<table>
-<thead><tr><th>Pattern</th><th>Purpose</th><th>Key Question</th></tr></thead>
-<tbody>
-<tr><td><strong>Reviewer</strong></td><td>Check content against criteria</td><td>"Does this meet the standard?"</td></tr>
-<tr><td><strong>Generator</strong></td><td>Create new content from source</td><td>"Make this exist."</td></tr>
-<tr><td><strong>Transformer</strong></td><td>Convert form or style</td><td>"Keep substance, change expression."</td></tr>
-<tr><td><strong>Analyzer</strong></td><td>Extract insights from content</td><td>"What's in here? What's missing?"</td></tr>
-</tbody></table>
+      <div class="slide-number">4 / 15</div>
+      <div class="slide-body"><h1>The Hierarchy</h1>
+<pre class="code-block"><code>Marketplace          ← a catalog (one GitHub repo) listing plugins
+  └── Plugin         ← the shareable bundle you install
+        ├── Commands ← slash-command skills (/check-style)
+        ├── Skills   ← auto-invoked SKILL.md skills
+        ├── Agents   ← subagents with own prompt &amp; tools
+        ├── Hooks    ← event handlers
+        └── MCP servers</code></pre>
+<blockquote>A <strong>marketplace</strong> contains <strong>plugins</strong>. A <strong>plugin</strong> bundles <strong>commands, skills & agents</strong>.</blockquote>
 </div>
     </section>
 
     <section class="slide" id="slide-5">
-      <div class="slide-number">5 / 14</div>
-      <div class="slide-body"><h1>Pattern 1: The Reviewer</h1>
-<p><strong>Purpose:</strong> Check content against criteria and report findings.</p>
-<pre class="code-block"><code>You are a [ROLE] reviewing [TARGET] for [PURPOSE].
-Review: $ARGUMENTS
-
-## Checklist
-1. [Criterion] — [what PASS looks like]
-2. [Criterion] — [what PASS looks like]
-
-## Output
-| Criterion | Status | Finding | Action |
-Status: ✅ PASS | ⚠️ NEEDS WORK | ❌ MISSING
-
-## Summary
-Score: X/Y | Top 3 improvements by impact</code></pre>
-<p><strong>Examples:</strong> <code>/check-api-doc</code>, <code>/check-readme</code>, <code>/term-audit</code></p>
+      <div class="slide-number">5 / 15</div>
+      <div class="slide-body"><h1>The Four Nouns</h1>
+<table>
+<thead><tr><th>Term</th><th>What it is</th><th>Analogy</th></tr></thead>
+<tbody>
+<tr><td><strong>Marketplace</strong></td><td>Catalog file (<code>marketplace.json</code>) in a Git repo</td><td>App store</td></tr>
+<tr><td><strong>Plugin</strong></td><td>Installable bundle (<code>plugin.json</code> + folders)</td><td>An app</td></tr>
+<tr><td><strong>Command</strong></td><td>Slash-command skill — <code>/name</code></td><td>A button</td></tr>
+<tr><td><strong>Agent</strong></td><td>Subagent with own prompt, tools, model</td><td>A specialist</td></tr>
+</tbody></table>
+<blockquote>Marketplace ≠ plugin. The catalog vs. the thing you install.</blockquote>
 </div>
     </section>
 
     <section class="slide" id="slide-6">
-      <div class="slide-number">6 / 14</div>
-      <div class="slide-body"><h1>Pattern 2: The Generator</h1>
-<p><strong>Purpose:</strong> Create new content from source material.</p>
-<pre class="code-block"><code>Read the source material at $ARGUMENTS and generate [OUTPUT TYPE].
-
-## Rules
-- [What must be included]
-- [What must be excluded]
-- [Formatting rule]
-
-## Output
-Output ONLY the [content type].
-No preamble. No commentary. Begin with the first line of content.</code></pre>
-<p><strong>Examples:</strong> <code>/release-notes</code>, <code>/scaffold-api-doc</code>, <code>/build-glossary</code></p>
+      <div class="slide-number">6 / 15</div>
+      <div class="slide-body"><h1>Command vs. Skill vs. Agent</h1>
+<ul>
+<li><strong>Command</strong> — runs when you type <code>/name</code>. Everything you built in Module 3.</li>
+<li><strong>Skill</strong> — a <code>SKILL.md</code> with a <code>description</code>, so Claude can <strong>auto-invoke</strong> it.</li>
+<li><strong>Agent</strong> — an isolated worker with its own tools & model, for <strong>delegated multi-step jobs</strong>.</li>
+</ul>
+<p><strong>Namespacing</strong> prevents collisions — a <code>check-style</code> command in the <code>doc-skills</code> plugin runs as:</p>
+<pre class="code-block"><code>/doc-skills:check-style</code></pre>
 </div>
     </section>
 
     <section class="slide" id="slide-7">
-      <div class="slide-number">7 / 14</div>
-      <div class="slide-body"><h1>Pattern 3: The Transformer</h1>
-<p><strong>Purpose:</strong> Convert content from one format or style to another.</p>
-<pre class="code-block"><code>Transform the content at $ARGUMENTS.
-
-## From: [current format/style/level]
-## To:   [target format/style/level]
-
-## Preserve (do NOT change)
-- Code samples, proper nouns, product names
-
-## Change
-- [What must be transformed]
-- [Style rules to apply]
-
-## Output
-The transformed content only. No markup showing changes.</code></pre>
-<p><strong>Examples:</strong> <code>/active-voice</code>, <code>/to-reference</code>, <code>/simplify</code></p>
+      <div class="slide-number">7 / 15</div>
+      <div class="slide-body"><h1>Installing — Step 1: Add the Marketplace</h1>
+<pre class="code-block"><code>/plugin marketplace add AmanProjects/twtai-skill</code></pre>
+<p>→ <code>Successfully added marketplace: twtai</code></p>
+<p>Also accepts:</p>
+<ul>
+<li><code>owner/repo@v1.0</code> (branch or tag)</li>
+<li>a git URL (GitLab, etc.)</li>
+<li><code>./local-folder</code></li>
+</ul>
+<blockquote>A marketplace is just a GitHub repo with a <code>marketplace.json</code> catalog.</blockquote>
 </div>
     </section>
 
     <section class="slide" id="slide-8">
-      <div class="slide-number">8 / 14</div>
-      <div class="slide-body"><h1>Pattern 4: The Analyzer</h1>
-<p><strong>Purpose:</strong> Extract insights, patterns, or gaps from raw material.</p>
-<pre class="code-block"><code>Analyze the content at $ARGUMENTS for [ANALYSIS PURPOSE].
-
-## What to Analyze
-- [Dimension 1]
-- [Dimension 2]
-
-## Output
-[SECTION 1: Summary Statistics]
-[SECTION 2: Detailed Findings]
-[SECTION 3: Priority Recommendations — each starts with a verb]</code></pre>
-<p><strong>Examples:</strong> <code>/doc-coverage</code>, <code>/jargon-audit</code>, <code>/naming-audit</code></p>
+      <div class="slide-number">8 / 15</div>
+      <div class="slide-body"><h1>Installing — Step 2: Install the Plugin</h1>
+<pre class="code-block"><code>/plugin install doc-skills@twtai</code></pre>
+<blockquote><code>twtai</code> is the marketplace <strong>name</strong>, not the repo (<code>twtai-skill</code>).</blockquote>
+<p><strong>Step 3 — use it:</strong></p>
+<pre class="code-block"><code>/doc-skills:check-style sample-docs/orders-api.md</code></pre>
+<p>Or run <code>/plugin</code> → <strong>Discover</strong> tab → pick → scope (User / Project / Local).</p>
+<p>Manage: <code>/plugin list</code>, <code>/plugin disable</code>, <code>/plugin uninstall</code>.</p>
 </div>
     </section>
 
     <section class="slide" id="slide-9">
-      <div class="slide-number">9 / 14</div>
-      <div class="slide-body"><h1>Which Pattern Do I Use?</h1>
-<pre class="code-block"><code>What is your primary goal?
-│
-├── Evaluate existing content ─────────→ REVIEWER
-│     "Does this meet the standard?"
-│
-├── Create new content ─────────────→ GENERATOR
-│     "Make this exist."
-│
-├── Change the form of content ─────→ TRANSFORMER
-│     "Same substance, different form."
-│
-└── Extract information ────────────→ ANALYZER
-      "Tell me what's in here / missing."</code></pre>
+      <div class="slide-number">9 / 15</div>
+      <div class="slide-body"><h1>A Real Repo: <code>AmanProjects/twtai-skill</code></h1>
+<pre class="code-block"><code>twtai-skill/                       ← marketplace repo (GitHub)
+├── .claude-plugin/marketplace.json ← the catalog (name: twtai)
+└── plugins/
+    └── doc-skills/                 ← a plugin
+        ├── .claude-plugin/plugin.json
+        ├── commands/               ← check-style.md, release-notes.md
+        ├── skills/doc-coverage/SKILL.md
+        ├── agents/doc-auditor.md
+        ├── hooks/hooks.json
+        └── .mcp.json               ← remote MCP servers</code></pre>
+<blockquote>Live example — clone it, copy the layout, swap in your skills.</blockquote>
 </div>
     </section>
 
     <section class="slide" id="slide-10">
-      <div class="slide-number">10 / 14</div>
-      <div class="slide-body"><h1>Workshop: Build One of Each</h1>
-<p>Work individually or in pairs.</p>
-<p><strong>Assignments (choose or assign):</strong></p>
-<ul>
-<li><code>/check-style</code> → Reviewer pattern</li>
-<li><code>/release-notes</code> → Generator pattern</li>
-<li><code>/simplify-prose</code> → Transformer pattern</li>
-<li><code>/doc-coverage</code> → Analyzer pattern</li>
-</ul>
-<p><strong>For each skill:</strong></p>
-<ol>
-<li>Pick the right pattern template</li>
-<li>Fill in YOUR Role, Context, Checklist/Rules, Constraints, Output</li>
-<li>Test on a sample document</li>
-<li>Note one thing you'd improve</li>
-</ol>
+      <div class="slide-number">10 / 15</div>
+      <div class="slide-body"><h1>The Two Files That Make It Work</h1>
+<p><strong><code>marketplace.json</code></strong> (repo root, in <code>.claude-plugin/</code>) — the catalog:</p>
+<pre class="code-block"><code>{
+  "name": "twtai",
+  "owner": { "name": "Tech Writer's Tribe" },
+  "plugins": [
+    { "name": "doc-skills", "source": "./plugins/doc-skills",
+      "description": "Docs skills from the TWT program." }
+  ]
+}</code></pre>
+<p><strong><code>plugin.json</code></strong> (in the plugin's <code>.claude-plugin/</code>) — the manifest:</p>
+<pre class="code-block"><code>{ "name": "doc-skills", "version": "1.0.0",
+  "description": "Documentation skills." }</code></pre>
+<blockquote>Only these two go in <code>.claude-plugin/</code>. <code>commands/</code>, <code>skills/</code>, <code>agents/</code> sit at the plugin root.</blockquote>
 </div>
     </section>
 
     <section class="slide" id="slide-11">
-      <div class="slide-number">11 / 14</div>
-      <div class="slide-body"><h1>Patterns + <code>skill-creator</code></h1>
-<p>The four patterns are the <strong>thinking</strong>. <code>skill-creator</code> is the <strong>typing</strong>.</p>
-<p><strong>Install (from Module 3):</strong></p>
-<pre class="code-block"><code>/plugin install skill-creator@claude-plugins-official</code></pre>
-<p><strong>Workflow:</strong></p>
+      <div class="slide-number">11 / 15</div>
+      <div class="slide-body"><h1>Workshop: Publish Your Own</h1>
+<p>Work in pairs — one publishes, one installs, then switch.</p>
+<p><strong>The 5-step loop:</strong></p>
 <ol>
-<li><strong>Pick the pattern</strong> — Reviewer / Generator / Transformer / Analyzer (your judgment)</li>
-<li><strong>Run <code>/skill-creator</code></strong> — describe it in pattern terms: "a Reviewer that checks…"</li>
-<li><strong>Review the scaffold</strong> — confirm Role, Context, Constraints, Output</li>
-<li><strong>Test & iterate</strong> — ask it to tighten the description or run an eval</li>
+<li>Create a GitHub repo (<code>your-name/my-skills</code>)</li>
+<li>Add <code>.claude-plugin/marketplace.json</code> (pick a <code>name</code>)</li>
+<li>Add a plugin folder with <code>plugin.json</code> + your skill in <code>commands/</code></li>
+<li>Commit & push</li>
+<li>Share two lines:</li>
 </ol>
-<blockquote>It writes an Agent Skill: <code>.claude/skills/<name>/SKILL.md</code></blockquote>
+<p>```</p>
+<p>/plugin marketplace add your-name/my-skills</p>
+<p>/plugin install my-plugin@my-marketplace</p>
+<p>```</p>
+<blockquote>Start from the <code>twtai-skill</code> template — don't build from a blank repo.</blockquote>
 </div>
     </section>
 
     <section class="slide" id="slide-12">
-      <div class="slide-number">12 / 14</div>
-      <div class="slide-body"><h1>Discussion</h1>
-<ol>
-<li>Which pattern covers the most tasks in your daily work?</li>
-</ol>
-<ol>
-<li>Can you think of a task that doesn't fit any of the four patterns?</li>
-</ol>
-<ol>
-<li>What's the risk of using a Generator pattern without a human review step?</li>
-</ol>
+      <div class="slide-number">12 / 15</div>
+      <div class="slide-body"><h1>When a Marketplace Is Overkill</h1>
+<table>
+<thead><tr><th>Situation</th><th>Lightweight option</th></tr></thead>
+<tbody>
+<tr><td>One skill, one person, once</td><td>Send the <code>.md</code>; they drop it in <code>.claude/commands/</code></td></tr>
+<tr><td>Your project team</td><td>Commit <code>.claude/commands/*.md</code> into the project repo</td></tr>
+<tr><td>Connect to a hosted tool</td><td>Commit a project <code>.mcp.json</code> with a remote URL</td></tr>
+</tbody></table>
+<p><strong>Use a marketplace</strong> for versioning, many skills, auto-updates, and one-command install at scale.</p>
 </div>
     </section>
 
     <section class="slide" id="slide-13">
-      <div class="slide-number">13 / 14</div>
+      <div class="slide-number">13 / 15</div>
+      <div class="slide-body"><h1>Discussion</h1>
+<ol>
+<li>What's one skill you'd publish first — and who's the audience?</li>
+</ol>
+<ol>
+<li>When is a full marketplace overkill, and a committed <code>.claude/commands/</code> file enough?</li>
+</ol>
+<ol>
+<li>What's the risk of a teammate auto-updating to your latest commit without review?</li>
+</ol>
+<blockquote>"A skill on your laptop is a habit. A skill in a marketplace is a standard."</blockquote>
+</div>
+    </section>
+
+    <section class="slide" id="slide-14">
+      <div class="slide-number">14 / 15</div>
       <div class="slide-body"><h1>Before Module 5</h1>
 <ol>
-<li><strong>Build</strong> a <code>/doc-coverage</code> skill using the <strong>Analyzer</strong> pattern</li>
-<li><strong>Build</strong> one custom skill using any pattern — specific to your workflow</li>
+<li><strong>Publish</strong> a marketplace — use <code>AmanProjects/twtai-skill</code> as a template; one repo, one plugin, at least one of your skills</li>
+<li><strong>Get a teammate</strong> to add your marketplace and install your plugin — confirm it runs on their machine</li>
 <li><strong>Read</strong> <code>resources/peer-review-rubric.md</code> — you'll use it next session</li>
 </ol>
 </div>
     </section>
 
-    <section class="slide" id="slide-14">
-      <div class="slide-number">14 / 14</div>
+    <section class="slide" id="slide-15">
+      <div class="slide-number">15 / 15</div>
       <div class="slide-body"><h1>🟡 Intermediate Checkpoint: Module 4</h1>
 <ul class="checklist">
-<li><input type="checkbox"  disabled> Name the 4 patterns from memory</li>
-<li><input type="checkbox"  disabled> Match a task to its correct pattern without the decision tree</li>
-<li><input type="checkbox"  disabled> Build a Reviewer skill with a complete, scored checklist</li>
-<li><input type="checkbox"  disabled> Build a Generator that produces clean output with no preamble</li>
-<li><input type="checkbox"  disabled> Explain when Transformer ≠ Generator</li>
-<li><input type="checkbox"  disabled> Apply the Analyzer pattern to surface undocumented gaps</li>
-<li><input type="checkbox"  disabled> Scaffold a pattern skill with <code>skill-creator</code>, then refine it by hand</li>
+<li><input type="checkbox"  disabled> Explain the marketplace → plugin → command/agent hierarchy</li>
+<li><input type="checkbox"  disabled> State the difference between a marketplace and a plugin</li>
+<li><input type="checkbox"  disabled> Tell when to use a command vs. a skill vs. an agent</li>
+<li><input type="checkbox"  disabled> Add a marketplace with <code>/plugin marketplace add</code></li>
+<li><input type="checkbox"  disabled> Install a plugin with <code>/plugin install <plugin>@<marketplace></code></li>
+<li><input type="checkbox"  disabled> Lay out a marketplace repo: <code>marketplace.json</code> + plugin + <code>plugin.json</code></li>
+<li><input type="checkbox"  disabled> Publish your own marketplace and have a teammate install it</li>
 </ul>
 <p><strong>Next: Module 5 — Advanced Skills & Team Workflows →</strong></p>
 </div>
@@ -617,16 +613,16 @@ The transformed content only. No markup showing changes.</code></pre>
   <footer class="controls">
     <button class="btn" id="btn-prev" onclick="prevSlide()" disabled>&#8592; Prev</button>
     <div class="progress-wrap">
-      <div class="progress-bar" id="progress-bar" style="width: 7.1%"></div>
+      <div class="progress-bar" id="progress-bar" style="width: 6.7%"></div>
     </div>
-    <span class="slide-counter" id="counter">1 / 14</span>
+    <span class="slide-counter" id="counter">1 / 15</span>
     <button class="btn btn-primary" id="btn-next" onclick="nextSlide()">Next &#8594;</button>
     <span class="kbd-hint"><kbd>←</kbd><kbd>→</kbd> navigate</span>
   </footer>
 
   <script>
     let current = 0;
-    const total = 14;
+    const total = 15;
     const slides = document.querySelectorAll('.slide');
 
     function show(n) {
