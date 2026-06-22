@@ -11,7 +11,7 @@
 | Project Track | Scope / Included Ideas | Suggested Owner | Target Team Size | Group Link |
 |---|---|---|---|---|
 | Release Notes | Release note generator and release-notes/project-update workflow. | Riffat | 9-10 including owner | <https://chat.whatsapp.com/LVEsGsjWYNQKbejrDk3kJg?s=cl&p=i&ilr=0> |
-| Document Intelligence Platform - Converter & Rebranding | Word to DITA-XML converter, rebranding across documents, document transformation, and document cleanup. | Samyak | 9-10 including owner | To be added |
+| Document Intelligence Platform - Converter & Rebranding | Word to DITA-XML converter, rebranding across documents, document transformation, and document cleanup. | Samyak | 9-10 including owner | https://chat.whatsapp.com/Lg86PNJNESN1a59UeI16Cu |
 | Document Intelligence Platform - Draft Generator & Automated Pre-Review | Rapid first drafts from demo recordings, wiki pages, and marketing content; automated pre-review for style, completeness, and readiness. | Shrutika | 9-10 including owner | To be added |
 
 **Decision deadline.** Owners for all three projects must be identified by end of business today, Sunday, 21 June 2026. Once owners are confirmed, sign-ups should be closed, teams balanced, and execution should begin.
