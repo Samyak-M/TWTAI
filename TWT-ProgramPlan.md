@@ -1,6 +1,6 @@
-# TWT Program Plan — AI-Powered Documentation Mastery
+# Program Plan — AI-Powered Documentation Mastery
 
-## Tech Writer's Tribe | Training & Certification Program
+## Training & Certification Program
 
 ---
 
@@ -9,7 +9,7 @@
 | Detail | Value |
 |--------|-------|
 | **Program name** | AI-Powered Documentation Mastery |
-| **Host organization** | Tech Writer's Tribe |
+| **Host organization** | AI Documentation Program |
 | **Total modules** | 8 |
 | **Duration per module** | 2 hours |
 | **Total classroom time** | 16 hours |
@@ -30,7 +30,7 @@ Tier       Modules    Milestone Deliverable
 🟢 Novice       1–2    Understand AI and MCP conceptually; complete setup
 🔵 Beginner     3      Write your first Claude Skill; explain the five prompt elements
 🟡 Intermediate 4–5    Build 3+ reusable skills using recognized patterns
-🟠 Advanced     6      Extend a real MCP server; read and modify TypeScript stubs
+🟠 Advanced     6      Extend a real MCP server; scaffold with MCPBuilder; publish to the official MCP registry
 🔴 Expert       7–8    Ship a production-grade MCP server; mentor others; earn certificate
 ```
 
@@ -38,13 +38,14 @@ Tier       Modules    Milestone Deliverable
 
 ## Certification Requirements
 
-To earn the **TWT AI Documentation Practitioner** certificate, participants must:
+To earn the **AI Documentation Practitioner** certificate, participants must:
 
 1. **Attend** at least 6 of 8 live sessions (or watch recordings within 1 week)
 2. **Submit a portfolio** containing:
    - Minimum 5 Claude Skills (with `/doc-review` multi-step skill required)
-   - One working MCP server (the doc-quality-checker or equivalent)
+   - One working MCP server — either `doc-quality-checker` (API-focused) or `style-guide-enforcer` (terminology, passive voice, structure validation — recommended for general TW portfolios)
    - A Personal AI Integration Plan
+   - Optional: a published MCP server URL (registry.modelcontextprotocol.io, Smithery, or PulseMCP)
 3. **Pass the skills assessment** (70% minimum):
    - Written scenario: identify the right skill pattern for a given task
    - Live demo: run your `/doc-review` skill on an unfamiliar document
@@ -74,11 +75,15 @@ To earn the **TWT AI Documentation Practitioner** certificate, participants must
 | `/doc-coverage` skill | Yes | 10 |
 | `/doc-review` multi-step skill | Yes | 20 |
 | Custom skill | Yes | 10 |
-| Working MCP server | Yes | 20 |
+| Working MCP server (`doc-quality-checker` or `style-guide-enforcer`) | Yes | 20 |
 | Personal AI Integration Plan | Yes | 10 |
-| **Total** | | **100** |
+| Published MCP server (any public registry) | No — bonus | +10 |
+| **Total (base)** | | **100** |
+| **Total (with bonus)** | | **110** |
 
 Minimum to pass: **70 points**
+
+> **Note on the MCP server requirement:** The `style-guide-enforcer` server (terminology checking, passive voice detection, structure validation by doc type) is the recommended choice for technical writers whose work extends beyond API documentation. Use `/create-style-guide-enforcer-mcp` in Claude Code to scaffold it interactively.
 
 ---
 
@@ -95,9 +100,9 @@ Minimum to pass: **70 points**
 
 ## Facilitator Notes
 
-### Tech Writer's Tribe Community Standards
+### Community Standards
 
-All sessions follow the TWT Code of Conduct:
+All sessions follow the Code of Conduct:
 - Inclusive, respectful language
 - Questions are always welcome — "there are no dumb questions"
 - Peer feedback is constructive, specific, and kind
@@ -107,7 +112,7 @@ All sessions follow the TWT Code of Conduct:
 
 - **Zoom** or **Teams** for live sessions
 - **VS Code** for collaborative exercises
-- **WhatsApp** TWT community channel for async Q&A
+- **Slack** or similar for async Q&A
 - **GitHub** for skill sharing and portfolio submissions
 
 ### Session Rhythm
@@ -124,4 +129,4 @@ Each 2-hour session follows this pattern:
 
 ---
 
-*Tech Writer's Tribe | AI-Powered Documentation Mastery | Program v1.0*
+*AI-Powered Documentation Mastery | Program v1.0*
