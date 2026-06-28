@@ -1,17 +1,17 @@
 ---
 name: create-mcp-with-builder
-description: Guides a user through building a fully functional MCP server using the official mcp-server-dev builder plugin, following the four-phase MCP builder methodology (Research & Planning → Implementation → Testing → Evaluation). This skill should be used whenever someone wants to create or scaffold an MCP server and prefers to use Claude's built-in MCP builder tool rather than writing code from scratch. Trigger when users say "build an MCP server", "create an MCP using the builder", "use mcpbuilder", "use mcp-server-dev", "scaffold an MCP server for me", or "help me make an MCP integration with the builder tool".
+description: Guides a user through building a fully functional MCP server using the official mcp-server-dev builder plugin from the Claude plugins registry. This skill should be used whenever someone wants to create or scaffold an MCP server using Claude's built-in MCP builder tool. Trigger when users say "build an MCP server", "create an MCP using the builder", "use mcpbuilder", "use mcp-server-dev", "scaffold an MCP server for me", or "help me make an MCP integration with the builder tool".
 ---
 
 # Create an MCP Server with the MCP Builder
 
-You are guiding the user through building a fully functional MCP server using the official **`mcp-server-dev`** plugin, following the four-phase MCP builder methodology: Research & Planning → Implementation → Testing → Evaluation.
+You are guiding the user through building a fully functional MCP server using the official **`mcp-server-dev`** plugin — three composable skills that cover the full build path: discovery → scaffolding → packaging → testing.
 
 ---
 
 ## Step 1 — Check whether the builder is installed
 
-Before anything else, check whether `mcp-server-dev` is installed:
+Before anything else, run:
 
 ```bash
 cat ~/.claude/plugins/installed_plugins.json
@@ -24,155 +24,221 @@ Look for a key starting with `"mcp-server-dev"` in the `plugins` object.
 
 ---
 
-## Step 2 — Prompt the user to install the plugin
+## Step 2 — Install the plugin
 
 Tell the user:
 
-> The `mcp-server-dev` builder plugin is not installed. Install it by running this command in your terminal (or prefix it with `!` to run it here):
+> The `mcp-server-dev` builder plugin is not installed. Run this command in your terminal (or prefix with `!` to run it here):
 >
 > ```
-> claude plugin install mcp-server-dev
+> claude plugin install mcp-server-dev@claude-plugins-official
 > ```
 >
-> This installs three skills from the official Claude plugins registry:
-> - **`build-mcp-server`** — entry point; determines deployment model and scaffolds the server
-> - **`build-mcp-app`** — adds interactive UI widgets (forms, pickers, confirm dialogs) rendered in chat
-> - **`build-mcpb`** — packages a local server with its runtime so users don't need Node or Python installed
+> This installs three composable skills from the official Claude plugins registry:
+>
+> | Skill | Purpose |
+> |---|---|
+> | `build-mcp-server` | Entry point — interrogates the use case, picks deployment model, scaffolds the server inline or routes to a specialized skill |
+> | `build-mcp-app` | Adds interactive UI widgets (forms, pickers, confirm dialogs, charts) rendered inline in chat |
+> | `build-mcpb` | Packages a local stdio server with its runtime — users install one `.mcpb` file, no Node or Python required |
 >
 > Once installation completes, type **"continue"** and I'll pick up from here.
 
-Wait for the user to confirm, then re-check `installed_plugins.json` to verify. If it still doesn't appear, suggest running `claude plugin update` to refresh the marketplace index and retrying.
+After the user confirms, re-check `installed_plugins.json`. If `mcp-server-dev` still doesn't appear, suggest running `claude plugin update` to refresh the marketplace index, then retrying.
 
 ---
 
-## Step 3 — Run the four-phase MCP builder workflow
+## Step 3 — Start the builder
 
-With the plugin confirmed installed, guide the user through all four phases. Announce each phase before starting it.
+Invoke the entry-point skill:
+
+```
+/mcp-server-dev:build-mcp-server
+```
+
+`build-mcp-server` runs a discovery conversation and then **either scaffolds inline or routes to a specialized skill** depending on the use case. Here is what it does and decides:
 
 ---
 
-### Phase 1: Research & Planning
+### Discovery questions (Phase 1 of the builder)
 
-Invoke `/mcp-server-dev:build-mcp-server` to begin the discovery conversation. The builder will ask:
+The builder asks four questions — batch them in one message:
 
-- **What does it connect to?** (cloud API, local filesystem, desktop app, hardware)
-- **Who will use it?** (just you / anyone who installs it)
-- **How many distinct actions does it expose?** (determines tool-design pattern)
-- **Does any tool need mid-call user input or rich display?** (elicitation vs. MCP app widgets)
-- **What auth does the upstream service use?** (none/API key, OAuth 2.0)
+1. **What does it connect to?**
+   - Cloud API / SaaS → Remote HTTP (default)
+   - Local filesystem, desktop app, OS-level APIs → MCPB
+   - Nothing external / pure logic → either, defaults to remote
 
-From those answers the builder recommends a deployment model:
-- **Remote streamable-HTTP** — default for cloud API wrappers; zero install friction
-- **MCP app** — remote HTTP + interactive UI widgets in chat
-- **MCPB** — bundled local server; no Node/Python required for end users
-- **Local stdio** — simplest prototype; personal tools only
+2. **Who will use it?**
+   - Just you / your team on your machines → Local stdio is acceptable
+   - Anyone who installs it → Remote HTTP or MCPB
+   - Claude Desktop users who want UI widgets → MCP app
+
+3. **How many distinct actions does it expose?**
+   - Fewer than ~15 → one tool per action
+   - Dozens to hundreds → search + execute pattern (`search_actions` / `execute_action`)
+
+4. **Does any tool need mid-call user input or rich display?**
+   - Simple confirm / pick from short list → **Elicitation** (spec-native, zero UI code; needs Claude Code ≥ 2.1.76)
+   - Rich pickers, charts, live dashboards, scrollable lists → **MCP app widgets**
+   - Neither → plain tool returning text/JSON
+
+5. **What auth does the upstream service use?**
+   - None / API key → straightforward
+   - OAuth 2.0 → needs remote server with CIMD or DCR support
+
+---
+
+### Deployment model (Phase 2 of the builder)
+
+Based on the answers, the builder recommends **one** path:
+
+| Path | When to choose | Scaffolded by |
+|---|---|---|
+| **Remote streamable-HTTP** | Wrapping any cloud API — default recommendation | `build-mcp-server` inline |
+| **MCP app** | Remote HTTP + UI widgets in chat | Routes to `build-mcp-app` |
+| **MCPB** | Must run locally (local files, desktop app, OS APIs) | Routes to `build-mcpb` |
+| **Local stdio** | Personal prototype only — painful to distribute | `build-mcp-server` inline, with MCPB upgrade note |
 
 **Recommended stack:**
-- TypeScript with `@modelcontextprotocol/sdk` (primary)
-- Python with `fastmcp` 3.x (if user prefers Python or is wrapping a Python library)
+- TypeScript + `@modelcontextprotocol/sdk` — default; best spec coverage, first to get new features
+- Python + `fastmcp` 3.x (`pip install fastmcp`) — if the user prefers Python or is wrapping a Python library
 
 ---
 
-### Phase 2: Implementation
+### What each path produces
 
-The builder scaffolds the project. Key outputs:
+**Remote HTTP** — the builder scaffolds:
+- `package.json` with `@modelcontextprotocol/sdk`, `zod`, `express`
+- `src/server.ts` using `McpServer` + `StreamableHTTPServerTransport` (stateless mode)
+- Tool registrations via `server.registerTool(name, {description, inputSchema, annotations}, handler)`
+- `annotations: { readOnlyHint: true }` on read-only tools (required for connector-directory submission)
 
-- `package.json` (or `pyproject.toml`) with the MCP SDK dependency and a `bin` entry
-- `tsconfig.json` / project config
-- `src/index.ts` (or `server.py`) with:
-  - Server initialization and transport setup
-  - Tool definitions with precise input/output schemas
-  - Authentication handling (API key injection, OAuth token exchange)
-  - Error handling with MCP-standard error codes
+**MCP app** — the builder routes to `build-mcp-app`, which adds:
+- `@modelcontextprotocol/ext-apps` package (`registerAppTool`, `registerAppResource`, `RESOURCE_MIME_TYPE`)
+- Each UI-enabled tool declares `_meta: { ui: { resourceUri: "ui://widgets/name.html" } }`
+- Each resource is registered with `RESOURCE_MIME_TYPE = "text/html;profile=mcp-app"` (this tells the host to render it as an iframe widget, not display HTML source)
+- Widget HTML inlines the ext-apps browser bundle via the `/*__EXT_APPS_BUNDLE__*/` placeholder — CDN script fetches are blocked by the iframe CSP, so bundling is mandatory
+- Widget communicates with host via the `App` class: `app.ontoolresult`, `app.sendMessage`, `app.callServerTool`, `app.openLink` (use instead of `window.open` — blocked by sandbox)
 
-**Tool design patterns:**
-- **One tool per action** — for servers with fewer than ~15 operations; gives Claude a tight, readable tool list
-- **Search + execute** — for large API surfaces (dozens of endpoints); exposes two tools (`search_actions`, `execute_action`) and keeps context lean
+**MCPB** — the builder routes to `build-mcpb`, which produces:
+- A standard stdio MCP server (identical wire protocol — nothing MCPB-specific in tool logic)
+- `manifest.json` with schema v0.4:
+  ```json
+  {
+    "$schema": "https://raw.githubusercontent.com/anthropics/mcpb/main/schemas/mcpb-manifest-v0.4.schema.json",
+    "manifest_version": "0.4",
+    "server": {
+      "type": "node",
+      "entry_point": "server/index.js",
+      "mcp_config": {
+        "command": "node",
+        "args": ["${__dirname}/server/index.js"],
+        "env": { "ROOT_DIR": "${user_config.rootDir}" }
+      }
+    },
+    "user_config": {
+      "rootDir": { "type": "directory", "title": "Root directory", "required": true }
+    }
+  }
+  ```
+  - Use `${__dirname}` for bundle-relative paths
+  - Use `${user_config.<key>}` to substitute install-time config values into env
+  - **MCPB has no manifest-level sandbox** — the process runs with full user privileges; path validation and security are entirely the developer's responsibility
+- Build pipeline using `@anthropic-ai/mcpb` CLI:
+  ```bash
+  npx @anthropic-ai/mcpb init       # interactive manifest creation
+  npx @anthropic-ai/mcpb validate   # validate manifest against schema
+  npx @anthropic-ai/mcpb pack       # zip and produce .mcpb file
+  npx @anthropic-ai/mcpb sign dist/my-server.mcpb  # sign for distribution
+  ```
+  For Node: bundle with `esbuild --bundle --platform=node` before packing. For Python: vendor deps with `pip install -t server/vendor -r requirements.txt`.
 
-After scaffolding, tell the user to:
+---
+
+### Testing (Phase 3 of the builder)
+
+After scaffolding, the builder guides the user to test:
+
+**All server types:**
 ```bash
-npm install && npm run build
-# or: pip install fastmcp && python server.py
+npx @modelcontextprotocol/inspector node dist/index.js
+```
+Connect the running server to MCP Inspector for interactive tool testing.
+
+**Remote HTTP and MCP app — add to Claude Code:**
+```bash
+claude mcp add <server-name> -- node $(pwd)/dist/index.js
 ```
 
----
-
-### Phase 3: Testing
-
-Guide the user to test the server before shipping:
-
-1. **Code quality review** — check for duplicated logic, consistent error handling, no hardcoded secrets
-2. **Build and compile** — confirm `npm run build` (or `python -m py_compile`) succeeds with no errors
-3. **MCP Inspector** — connect the running server to the MCP Inspector tool for interactive tool testing:
-   ```bash
-   npx @modelcontextprotocol/inspector node dist/index.js
-   ```
-4. **Live test in Claude Code** — add the server as a local MCP server:
-   ```bash
-   claude mcp add <server-name> -- node $(pwd)/dist/index.js
-   ```
-   Then invoke each tool from a Claude Code session and verify outputs match expectations.
-
----
-
-### Phase 4: Evaluation
-
-Before marking the server ready for distribution, create an evaluation suite of **10 realistic, complex test questions** that exercise the server's tools. Each question should:
-
-- Reflect real user intent (not a toy example)
-- Require at least one tool call to answer
-- Have a verifiable expected answer
-
-Output the evaluation suite in this XML format:
-
-```xml
-<evaluation>
-  <question id="1">
-    <prompt>...</prompt>
-    <tools_required>tool_name_1, tool_name_2</tools_required>
-    <expected_answer>...</expected_answer>
-  </question>
-  <!-- repeat for all 10 questions -->
-</evaluation>
+**MCP app in Claude Desktop** — Claude Desktop requires a `command/args` config shape. Wrap with `mcp-remote` and force HTTP-only transport (prevents the SSE probe from swallowing widget-capability negotiation):
+```json
+{
+  "mcpServers": {
+    "my-server": {
+      "command": "npx",
+      "args": ["-y", "mcp-remote", "http://localhost:3000/mcp", "--allow-http", "--transport", "http-only"]
+    }
+  }
+}
 ```
+After editing widget HTML, **fully quit Claude Desktop** (⌘Q / Alt+F4) and relaunch — Desktop caches UI resources aggressively and window-close is not enough.
 
-Verify each expected answer independently (by running the tool or checking the upstream API docs). Save the file as `eval/questions.xml` in the project root.
+**MCPB — validate and test before packing:**
+```bash
+npx @anthropic-ai/mcpb validate
+npx @anthropic-ai/mcpb pack
+# Install by dragging the .mcpb file onto Claude Desktop
+```
+Test on a machine **without** your dev toolchain before shipping — "works on my machine" failures in MCPB almost always trace to a dependency that wasn't bundled.
 
 ---
 
-## Step 4 — Next steps after all four phases
+## Step 4 — After the server is built
 
-Print this summary:
+Once the builder finishes, tell the user:
 
 ```
 Your MCP server is ready. Next steps:
 
-1. Publish the package:
-   npm login && npm publish --access public
-   (or: pip install build && python -m build && twine upload dist/*)
+Remote HTTP / MCP app:
+  npm run build
+  Deploy to Cloudflare Workers, Railway, Fly.io, or any host
+  Submit to the Anthropic connector directory:
+  https://claude.com/docs/connectors/building/submission
 
-2. Submit to the Anthropic connector directory:
-   https://claude.com/docs/connectors/building/submission
+MCPB:
+  npx @anthropic-ai/mcpb sign dist/<name>.mcpb
+  Distribute the .mcpb file (drag-to-install on Claude Desktop)
 
-3. Wrap it as a Claude plugin for easy distribution:
-   /plugin-to-mcp  (converts the server into a plugin with skills)
+Optional — publish as a Claude plugin (adds skills, agents, commands):
+  /plugin-to-mcp
 
-4. Submit to the official MCP registry:
-   /mcp-submit-mcp-registry  (generates a pre-filled submission form)
+Optional — generate MCP registry submission form:
+  /mcp-submit-mcp-registry
 ```
 
 ---
 
-## Handling edge cases
+## Routing directly to a sub-skill
 
-- **User knows which sub-skill they need directly:**
-  - Interactive UI (forms, pickers, live widgets): `/mcp-server-dev:build-mcp-app`
-  - Bundled local server: `/mcp-server-dev:build-mcpb`
-  - Everything else: `/mcp-server-dev:build-mcp-server`
+If the user already knows what they need, skip `build-mcp-server` and go directly:
 
-- **Plugin install fails:** Check internet connection, confirm they are on Claude Code CLI (not the web app), run `claude plugin update`, then retry.
+- UI widgets (forms, pickers, charts, live dashboards): `/mcp-server-dev:build-mcp-app`
+- Bundled local server (`.mcpb`, no Node/Python for end users): `/mcp-server-dev:build-mcpb`
+- Everything else (remote HTTP, local stdio, use-case discovery): `/mcp-server-dev:build-mcp-server`
 
-- **User asks about transport types:**
-  > - **Remote streamable-HTTP** — hosted, zero install, one deployment serves all users. Best for cloud APIs.
-  > - **MCPB** — local server bundled with runtime. No Node/Python needed. Best for local file access or driving desktop apps.
-  > - **Local stdio** — easiest to prototype, painful to distribute. Personal tools only.
+---
+
+## Common questions
+
+**Remote HTTP vs MCPB vs local stdio?**
+> - **Remote HTTP** — hosted server, zero install friction, one deploy for all users. Best for cloud APIs.
+> - **MCPB** — local server bundled with runtime. No Node/Python needed. Best when the server must read local files or drive a desktop app. No manifest-level sandbox — security is your code's job.
+> - **Local stdio** — easiest to prototype, hard to distribute. Personal tools only.
+
+**Elicitation vs MCP app widgets?**
+> Elicitation is spec-native (zero UI code) and covers simple yes/no, short enum picks, and flat forms. Use it if the host supports it (Claude Code ≥ 2.1.76). Reach for MCP app widgets when you need scrollable/searchable lists, visual previews, charts, or live-updating UI.
+
+**Plugin install fails?**
+> Check internet connection, confirm you are using Claude Code CLI (not the web app), run `claude plugin update` to refresh the marketplace index, then retry.
